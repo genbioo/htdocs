@@ -1,0 +1,15 @@
+/*Author: Genesis Lagacan
+Date Created: October 27, 2017*/
+
+
+.main{
+  background: url(/assets/img/bg.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+
+.form-login{
+	box-shadow: none !important;
+	webkit-box-shadow: none;
+	border-radius: 0 !important;
+}

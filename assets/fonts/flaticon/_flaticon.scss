@@ -1,0 +1,115 @@
+    /*
+    Flaticon icon font: Flaticon
+    Creation date: 10/11/2016 08:12
+    */
+
+    @font-face {
+  font-family: "Flaticon";
+  src: url("./Flaticon.eot");
+  src: url("./Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("./Flaticon.woff") format("woff"),
+       url("./Flaticon.ttf") format("truetype"),
+       url("./Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("./Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+    .fi:before{
+        display: inline-block;
+  font-family: "Flaticon";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+    }
+
+    .flaticon-bell:before { content: "\f100"; }
+.flaticon-calendar:before { content: "\f101"; }
+.flaticon-cash:before { content: "\f102"; }
+.flaticon-chef-hat:before { content: "\f103"; }
+.flaticon-chronometer-outline:before { content: "\f104"; }
+.flaticon-compass:before { content: "\f105"; }
+.flaticon-crop-symbol:before { content: "\f106"; }
+.flaticon-dashboard:before { content: "\f107"; }
+.flaticon-envelope:before { content: "\f108"; }
+.flaticon-layers:before { content: "\f109"; }
+.flaticon-line-chart:before { content: "\f10a"; }
+.flaticon-line-graph:before { content: "\f10b"; }
+.flaticon-line-graph-1:before { content: "\f10c"; }
+.flaticon-map:before { content: "\f10d"; }
+.flaticon-maple-leaf:before { content: "\f10e"; }
+.flaticon-megaphone:before { content: "\f10f"; }
+.flaticon-mountain-range-on-black-background:before { content: "\f110"; }
+.flaticon-music-social-group:before { content: "\f111"; }
+.flaticon-note:before { content: "\f112"; }
+.flaticon-peace-flag-center-of-three-dots:before { content: "\f113"; }
+.flaticon-photo-library:before { content: "\f114"; }
+.flaticon-piggy-bank:before { content: "\f115"; }
+.flaticon-placeholder:before { content: "\f116"; }
+.flaticon-planet-earth:before { content: "\f117"; }
+.flaticon-ruler-and-pencil:before { content: "\f118"; }
+.flaticon-select-all:before { content: "\f119"; }
+.flaticon-settings:before { content: "\f11a"; }
+.flaticon-settings-cogwheel-button:before { content: "\f11b"; }
+.flaticon-smartphone:before { content: "\f11c"; }
+.flaticon-smartphone-1:before { content: "\f11d"; }
+.flaticon-telephone:before { content: "\f11e"; }
+.flaticon-telephone-1:before { content: "\f11f"; }
+.flaticon-thermometer-high-temperature:before { content: "\f120"; }
+.flaticon-underline-button:before { content: "\f121"; }
+.flaticon-users:before { content: "\f122"; }
+.flaticon-vacations-sunset:before { content: "\f123"; }
+.flaticon-wallet:before { content: "\f124"; }
+.flaticon-wallet-1:before { content: "\f125"; }
+    
+    $font-Flaticon-bell: "\f100";
+    $font-Flaticon-calendar: "\f101";
+    $font-Flaticon-cash: "\f102";
+    $font-Flaticon-chef-hat: "\f103";
+    $font-Flaticon-chronometer-outline: "\f104";
+    $font-Flaticon-compass: "\f105";
+    $font-Flaticon-crop-symbol: "\f106";
+    $font-Flaticon-dashboard: "\f107";
+    $font-Flaticon-envelope: "\f108";
+    $font-Flaticon-layers: "\f109";
+    $font-Flaticon-line-chart: "\f10a";
+    $font-Flaticon-line-graph: "\f10b";
+    $font-Flaticon-line-graph-1: "\f10c";
+    $font-Flaticon-map: "\f10d";
+    $font-Flaticon-maple-leaf: "\f10e";
+    $font-Flaticon-megaphone: "\f10f";
+    $font-Flaticon-mountain-range-on-black-background: "\f110";
+    $font-Flaticon-music-social-group: "\f111";
+    $font-Flaticon-note: "\f112";
+    $font-Flaticon-peace-flag-center-of-three-dots: "\f113";
+    $font-Flaticon-photo-library: "\f114";
+    $font-Flaticon-piggy-bank: "\f115";
+    $font-Flaticon-placeholder: "\f116";
+    $font-Flaticon-planet-earth: "\f117";
+    $font-Flaticon-ruler-and-pencil: "\f118";
+    $font-Flaticon-select-all: "\f119";
+    $font-Flaticon-settings: "\f11a";
+    $font-Flaticon-settings-cogwheel-button: "\f11b";
+    $font-Flaticon-smartphone: "\f11c";
+    $font-Flaticon-smartphone-1: "\f11d";
+    $font-Flaticon-telephone: "\f11e";
+    $font-Flaticon-telephone-1: "\f11f";
+    $font-Flaticon-thermometer-high-temperature: "\f120";
+    $font-Flaticon-underline-button: "\f121";
+    $font-Flaticon-users: "\f122";
+    $font-Flaticon-vacations-sunset: "\f123";
+    $font-Flaticon-wallet: "\f124";
+    $font-Flaticon-wallet-1: "\f125";

@@ -1,0 +1,47 @@
+/*Author: Genesis Lagacan
+Date Created: October 27, 2017*/
+
+
+body{
+	font-family: 'Roboto', sans-serif;
+}
+
+
+#logo{
+	font-weight: 600;
+	color: #fff;
+}
+
+#panel-login{
+	margin-top: 100px;
+	box-shadow: none !important;
+	webkit-box-shadow: none;
+	border: none !important;
+	border-radius: 6px;
+
+}
+
+#panel-body-login{
+	padding-left: 50px;
+	padding-right: 50px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+#form-login{
+	box-shadow: none !important;
+	webkit-box-shadow: none;
+	border-radius: 2px !important;
+}
+
+#login-btn{
+	line-height: 1.33;
+	border-radius: 2px !important;
+	margin-top: 30px;
+	border-bottom: 3px solid #255f90;
+}
+
+#login-btn:hover{
+	border-bottom: 3px solid #255f90;
+	background: #2e6da4 !important;
+}
