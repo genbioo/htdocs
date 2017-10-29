@@ -143,18 +143,7 @@
 
   <aside class="main-sidebar fixed">
   <section class="sidebar">
-
-      <!-- Sidebar user panel (optional) -->
-      <!-- <div class="user-panel">
-        <div class="pull-left image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-        </div>
-        <div class="pull-left info">
-          <p>Admin, PSRMS</p>
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-        </div>
-      </div> -->
-
+      
       <!-- search form (Optional) -->
       <form action="#" method="get" class="sidebar-form">
         <div class="input-group">
@@ -169,23 +158,24 @@
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li>
+        <li class="header">MAIN NAVIGATION</li>
+        <li <?= isset($active) && $active =='' ? 'class="active"': null ?>>
             <a href="index.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
         </li>
-        <li>
+        <li <?= isset($active) && $active =='' ? 'class="active"': null ?>>
             <a href="idp.list.php" id="idpMenu"><i class="fa fa-address-card-o fa-fw"></i> IDPs</a>
             <!-- /.nav-second-level -->
         </li>
-        <li>
+        <li <?= isset($active) && $active =='' ? 'class="active"': null ?>>
             <a href="forms.manage.tools.php"><i class="fa fa-file-text-o fa-fw"></i> Assessment Tools</a>
         </li>
-        <li>
+        <li <?= isset($active) && $active =='' ? 'class="active"': null ?>>
             <a href="evac.manage.centers.php"><i class="fa fa-home fa-fw"></i> Evacuation Centers</a>
         </li>
         <?php
         if($_SESSION["account_type"] == '77') {
         ?>
-        <li>
+        <li <?= isset($active) && $active =='' ? 'class="active"': null ?>>
             <a href="user.enroll.php"><i class="fa fa-key fa-fw"></i> Account Management</a>
         </li>
         <?php
