@@ -66,7 +66,7 @@ if($_GET['from'] == 'intake')
                                         <br>
                                     </li>
                                     <button class="btn btn-success btn-fill btn-sm" type="submit" id="submitButton" style="display:none">Continue</button>
-                                    <a href="assessment.php" class="btn btn-success btn-fill btn-sm" id="returnButton">Back</a>
+                                    <a href="javascript:history.go(-1)" class="btn btn-success btn-fill btn-sm" id="returnButton">Back</a>
                                 </ul>
                             </form>
                         </div>

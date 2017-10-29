@@ -148,7 +148,7 @@ function getAllAssessmentTools() {
     return $forms;
 }
 
-function getMultipleAssessmentTools($qIDs)
+function getMultipleAssessmentTools($qIDs = '')
 {
     if(!isset($qIDs)) $qIDs = ['z']; //safeguard for tampered $qIDs
     $db_handle = new DBController();
@@ -173,7 +173,7 @@ function getAssessmentTool($qID)
     return $formInfo;
 }
 
-function getAssessmentQuestions($type,$qIDs) {
+function getAssessmentQuestions($type = '',$qIDs = '') {
     if(!isset($qIDs)) $qIDs = ['z']; //safeguard for tampered $qIDs
     $db_handle = new DBController();
     if($type == 'Tool')
@@ -209,7 +209,7 @@ function getAssessmentQuestions($type,$qIDs) {
     return $questionsResult;
 }
 
-function getEditToolQuestions($qID)
+function getEditToolQuestions($qID = '')
 {
     if(!isset($qIDs)) $qIDs = ['z']; //safeguard for tampered $qIDs
     $db_handle = new DBController();
@@ -226,7 +226,7 @@ function getEditToolQuestions($qID)
     return $questionsResult;
 }
 
-function getIntakeInfo($id)
+function getIntakeInfo($id = '')
 {
     $db_handle = new DBController();
     $db_handle->prepareStatement(
@@ -241,6 +241,16 @@ function getIntakeInfo($id)
     return $intakeInfo;
 }
 
+function getAgeGroup($id = '')
+{
+    $db_handle = new DBController();
+    $db_handle->prepareStatement("SELECT (CASE WHEN (Age > 18) THEN '2' ELSE '1' END) AS AgeGroup FROM `idp` WHERE idp.IDP_ID = :id");
+    $db_handle->bindVar(':id', $id, PDO::PARAM_INT,0);
+    $ageGroup = $db_handle->runFetch();
+
+    return $ageGroup;
+}
+
 function getIntakeCount($idpID = '')
 {
     $db_handle = new DBController();
@@ -251,7 +261,7 @@ function getIntakeCount($idpID = '')
     return $intakeCount;
 }
 
-function getIntakeID($idpID, $ag)
+function getIntakeID($idpID = '', $ag = '')
 {
     $formID = 0;
     if(!filter_var($idpID, FILTER_VALIDATE_INT) === false) {
@@ -379,28 +389,25 @@ function getList($data, $listType = 'IDP', $listTarget = '')
     }
     else if($listType === 'Assessment_taken')
     {
-        $query .= "SELECT A.DateTaken, FormType as FormID, Score, A.Assessment, A.IDP_IDP_ID as IDP, A.FORM_ANSWERS_ID, A.User as User, A.UnansweredItems, A.Cutoff, A.FORM_FormID
-                   FROM
-                        (SELECT form_answers.IDP_IDP_ID, form_answers.FORM_ANSWERS_ID, FormType, form_answers.USER_UserID, form_answers.DateTaken, form_answers.UnansweredItems,
-                            CONCAT(user.Lname, ', ', user.Fname, ' ', user.Mname) as User,
-                            auto_assmt.Assessment, auto_assmt.Cutoff,auto_assmt.FORM_FormID
-                        FROM form_answers
-                        JOIN form ON form.FormID = form_answers.FORM_FormID
-                        JOIN user ON user.UserID = form_answers.USER_UserID
-                        LEFT JOIN auto_assmt ON auto_assmt.FORM_FormID = form_answers.FORM_FormID
-                        WHERE form_answers.IDP_IDP_ID = :idpID) A
-                   RIGHT JOIN
-                        (SELECT DISTINCT(IDP_IDP_ID), FORM_ANSWERS_ID,
-                            COALESCE(SUM(answers_quanti.Answer),0) as Score
-                        FROM answers_quanti
-                        RIGHT JOIN form_answers ON form_answers.FORM_ANSWERS_ID = answers_quanti.FORM_ANWERS_FORM_ANSWERS_ID
-                        WHERE form_answers.IDP_IDP_ID = :idpID
-                        GROUP BY FORM_ANWERS_FORM_ANSWERS_ID) B
-                   ON A.FORM_ANSWERS_ID = B.FORM_ANSWERS_ID ";
+        $query .= "SELECT form_answers.DateTaken,
+                          form.FormType AS FormID,
+                          form_answers.Score,
+                          auto_assmt.Assessment,
+                          form_answers.IDP_IDP_ID AS IDP,
+                          form_answers.FORM_ANSWERS_ID,
+                          CONCAT(user.Lname, ', ', user.Fname, ' ', user.Mname) as User,
+                          form_answers.UnansweredItems,
+                          auto_assmt.Cutoff,
+                          form_answers.FORM_FormID
+                    FROM form_answers
+                    LEFT JOIN form ON form_answers.FORM_FormID = form.FormID
+                    LEFT JOIN auto_assmt ON form_answers.FORM_FormID = auto_assmt.FORM_FormID
+                    LEFT JOIN user ON form_answers.USER_UserID = user.UserID
+                    WHERE form_answers.IDP_IDP_ID = :idpID ";
 
         if($keyword != '')
         {
-            $query .= " WHERE FormType LIKE :keyword OR A.User LIKE :keyword ";
+            $query .= " AND FormType LIKE :keyword OR A.User LIKE :keyword ";
         }
 
         if($order != '')
@@ -416,7 +423,7 @@ function getList($data, $listType = 'IDP', $listTarget = '')
         }
         else
         {
-            $query .= 'ORDER BY 1 ASC ';
+            $query .= 'ORDER BY DateTaken ASC, FormType ASC ';
         }
     }
     else if($listType === 'Intake')
@@ -590,7 +597,7 @@ function getList($data, $listType = 'IDP', $listTarget = '')
 
                 if($row['intake_answersID'] == 0) {
                     $subArray[] = 
-                        '<a class="btn btn-info btn-xs btn-fill" href="idp.assessment.history.php?id='.$row["IDP_ID"].'&ag='.$row["age_group"].'">
+                        '<a class="btn btn-info btn-xs btn-fill" href="idp.assessment.history.php?id='.$row["IDP_ID"].'">
                             <i class="pe-7s-info"></i>Assessment History
                         </a>
                         <br>
@@ -601,7 +608,7 @@ function getList($data, $listType = 'IDP', $listTarget = '')
                 else
                 {
                     $subArray[] = 
-                        '<a class="btn btn-info btn-xs btn-fill" href="idp.assessment.history.php?id='.$row["IDP_ID"].'&ag='.$row["age_group"].'">
+                        '<a class="btn btn-info btn-xs btn-fill" href="idp.assessment.history.php?id='.$row["IDP_ID"].'">
                             <i class="pe-7s-info"></i>Assessment History
                          </a>
                          <br>

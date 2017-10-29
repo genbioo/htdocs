@@ -9,6 +9,8 @@ $question_ids = [];
 $answeredQuestions = [];
 $unansweredQuestion = [];
 $formIDs = [];
+$formAnswers = [];
+$tempScore = 0;
 $idp_form_answers_id = [];
 
 $parameters = array(); //array of parameters for PDO binding
@@ -32,24 +34,37 @@ foreach($post as $key => $result) {
             $db_handle->runUpdate();
             //store the auto-incremented id for use in update. Unanswered questions will be updated after this foreach
             $tempID = $db_handle->getLastInsertID();
-            $idp_form_answers_id[$keys2[0]."-".$tempID] = $tempID;
+            $idp_form_answers_id[$keys2[0]] = $tempID;
         }
         //add query for answers_quali and answers_quanti
         $answeredQuestions[$keys2[2]] = $keys2[2]; //set question id as array index for easier finding later
         if(isset($result) && $keys2[1] == 1) {
+            $formAnswers[$keys2[0]][$keys2[2]] = $result;
             $paramNum++;
             $query .= "INSERT INTO `answers_quanti` (`ANSWERS_QUANTI_ID`, `Answer`, `QUESTIONS_QuestionsID`, `FORM_ANWERS_FORM_ANSWERS_ID`, `INTAKE_ANSWERS_INTAKE_ANSWERS_ID`) VALUES (NULL, :answer".$paramNum.", :qid".$paramNum.", :faid".$paramNum.", NULL);";
-            $parameters[] = array('answer'.$paramNum => $result, 'qid'.$paramNum => $keys2[2], 'faid'.$paramNum => $idp_form_answers_id[$keys2[0]."-".$tempID], 'type'.$paramNum => 'quanti');
+            $parameters[] = array('answer'.$paramNum => $result, 'qid'.$paramNum => $keys2[2], 'faid'.$paramNum => $idp_form_answers_id[$keys2[0]], 'type'.$paramNum => 'quanti');
         } else if(isset($result)) {
             $paramNum++;
             $query .= "INSERT INTO `answers_quali` (`ANSWERS_QUALI_ID`, `Answer`, `QUESTIONS_QuestionsID`, `FORM_ANSWERS_FORM_ANSWERS_ID`, `INTAKE_ANSWERS_INTAKE_ANSWERS_ID`) VALUES (NULL, :answer".$paramNum.", :qid".$paramNum.", :faid".$paramNum.", NULL);";
-            $parameters[] = array('answer'.$paramNum => $result, 'qid'.$paramNum => $keys2[2], 'faid'.$paramNum => $idp_form_answers_id[$keys2[0]."-".$tempID], 'type'.$paramNum => 'quanli');
+            $parameters[] = array('answer'.$paramNum => $result, 'qid'.$paramNum => $keys2[2], 'faid'.$paramNum => $idp_form_answers_id[$keys2[0]], 'type'.$paramNum => 'quanli');
         } else {
             $unansweredQuestion[$keys1[1]."-".$keys1[3]] = $keys1[3];
         }
     }
 }
-
+foreach($formAnswers as $key1 => $form)
+{
+    $scoreQuery = "UPDATE `form_answers` SET `Score` = :score WHERE `form_answers`.`FORM_ANSWERS_ID` = :fid";
+    foreach($form as $answer)
+    {
+        $tempScore += $answer;
+    }
+    $db_handle->prepareStatement($scoreQuery);
+    $db_handle->bindVar(':score', $tempScore, PDO::PARAM_INT, 0);
+    $db_handle->bindVar(':fid', $idp_form_answers_id[$key1], PDO::PARAM_INT,0);
+    $db_handle->runUpdate();
+    $tempScore = 0;
+}
 //-------- keeping track of unanswered questions --------
 foreach($question_ids as $key => $qID) {
     $keys3 = explode('-',$key);
@@ -59,11 +74,10 @@ foreach($question_ids as $key => $qID) {
 }
 asort($unansweredQuestion);
 foreach($idp_form_answers_id as $key1 => $item1) {
-    $arr1 =  explode('-',$key1);
     $query .= "UPDATE `form_answers` SET `UnansweredItems` = '";
     foreach($unansweredQuestion as $key2 => $item2) {
         $arr2 = explode('-',$key2);
-        if($arr1[0] == $arr2[0]) {
+        if($key1 == $arr2[0]) {
             $query .= $item2.",";
         }
     }
@@ -87,7 +101,7 @@ foreach($parameters as $param) {
 
 $db_handle->runUpdate($query);
 if($db_handle->getUpdateStatus()) {
-    header("location: /pages/idp.assessment.history.php?id=".$idp_id."&ag=".$age_group."&status=toolsuccess");
+    header("location: /pages/idp.assessment.history.php?id=".$_SESSION['idpID']."&status=toolsuccess");
 }
 unset($_SESSION['idpID']);
 ?>

@@ -3,7 +3,7 @@ include("../initialize.php");
 includeCore();
 
 $id = $_GET['id'];
-$ag = $_GET['ag'];
+$ag = getAgeGroup($id)[0]['AgeGroup'];
 
 $idp = getIDPExtensiveDetails($id);
 $intakeCount = getIntakeCount($id);
