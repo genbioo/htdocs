@@ -597,26 +597,27 @@ function getList($data, $listType = 'IDP', $listTarget = '')
 
                 if($row['intake_answersID'] == 0) {
                     $subArray[] = 
-                        '<a class="btn btn-info btn-xs btn-fill" href="idp.assessment.history.php?id='.$row["IDP_ID"].'">
+                        '<div class="btn-group" role="group" aria-label="...">
+                          <a class="btn btn-info btn-xs btn-fill" href="idp.assessment.history.php?id='.$row["IDP_ID"].'">
                             <i class="pe-7s-info"></i>Assessment History
-                        </a>
-                        <br>
+                         </a>
                         <a href="assessment.informed.consent.php?id='.$row["IDP_ID"].'&ag='.$row["age_group"].'&from=intake" class="btn btn-success btn-xs btn-fill">
                             <i class="icon_check_alt"></i>Apply Intake
-                        </a>';
+                         </a>
+                        </div>';
                 } 
                 else
                 {
                     $subArray[] = 
-                        '<a class="btn btn-info btn-xs btn-fill" href="idp.assessment.history.php?id='.$row["IDP_ID"].'">
+                        '<div class="btn-group" role="group" aria-label="...">
+                          <a class="btn btn-info btn-xs btn-fill" href="idp.assessment.history.php?id='.$row["IDP_ID"].'">
                             <i class="pe-7s-info"></i>Assessment History
                          </a>
-                         <br>
-                         <a href="assessment.select.forms.php?id='.$row["IDP_ID"].'" class="btn btn-primary btn-xs btn-fill">Apply Assessment Tool</a>
-                         <br>
-                         <a href="assessment.informed.consent.php?id='.$row["IDP_ID"].'&ag='.$row["age_group"].'&from=intake" class="btn btn-success btn-xs btn-fill">
+                        <a href="assessment.select.forms.php?id='.$row["IDP_ID"].'" class="btn btn-primary btn-xs btn-fill">Apply Assessment Tool</a>
+                        <a href="assessment.informed.consent.php?id='.$row["IDP_ID"].'&ag='.$row["age_group"].'&from=intake" class="btn btn-success btn-xs btn-fill">
                             <i class="icon_check_alt"></i>Apply Intake
-                         </a>';
+                         </a>
+                        </div>';
                 }
             }
             else if($listType === 'Tool')

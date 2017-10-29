@@ -18,18 +18,24 @@ $_SESSION['disaster_id'] = 1;
 
     </head>
 
-    <body>
+    <body class="hold-transition skin-blue sidebar-mini fixed">
 
-        <div id="wrapper">
+        <div class="wrapper">
             
            <?php includeNav(); ?>
 
-            <div id="page-wrapper">
-                <!-- /.row -->
-                <div class="row">
-                    <div class="header">
-                        <h3 class="title">&nbsp;Enrolled IDPs&nbsp;<a href="idp.enroll.php" type="button" class="btn btn-success btn-xs btn-fill">Add New IDP</a></h3>
-                    </div>
+           <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+
+            <!-- Main content -->
+            <section class="content container-fluid">
+
+              <div class="row">
+                    <section class="content-header">
+                      <h1>
+                        Enrolled IDPs&nbsp;<a href="idp.enroll.php" type="button" class="btn btn-success btn-md btn-fill">Add New IDP</a>
+                      </h1>
+                    </section>
                     <div class="col-lg-12">
                         <div class="panel panel-default">
                             
@@ -54,8 +60,11 @@ $_SESSION['disaster_id'] = 1;
                     </div>
                 </div>
                 <!-- /.row -->
-            </div>
-            <!-- /#page-wrapper -->
+
+            </section>
+            <!-- /.content -->
+          </div>
+
         </div>
         <!-- /#wrapper -->
 

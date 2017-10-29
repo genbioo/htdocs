@@ -18,17 +18,24 @@ $toolsList = getAllAssessmentTools();
 
     </head>
 
-    <body>
+    <body class="hold-transition skin-blue sidebar-mini fixed">
 
-        <div id="wrapper">
-            <?php includeNav(); ?>
-            <div id="page-wrapper">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header">Available Tools</h1>
-                    </div>
-                    <!-- /.col-lg-12 -->
-                </div>
+        <div class="wrapper">
+            
+           <?php includeNav(); ?>
+
+           <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+
+            <!-- Main content -->
+            <section class="content container-fluid">
+
+              <div id="page-wrapper">
+                <section class="content-header">
+                  <h1>
+                    Available Tools
+                  </h1>
+                </section>
                 <!-- /.row -->
                 <div class="row">
                     <div class="row">
@@ -85,7 +92,13 @@ $toolsList = getAllAssessmentTools();
                 </div>
             </div>
 
+            </section>
+            <!-- /.content -->
+          </div>
+
         </div>
+        <!-- /#wrapper -->
+
 
         <?php includeCommonJS(); ?>
 

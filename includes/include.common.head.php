@@ -8,7 +8,6 @@
 
 <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="/assets/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
-<link href="/assets/dist/css/sb-admin-2.css" rel="stylesheet">
 <link href="/assets/dist/css/styles.css" rel="stylesheet">
 <link href="/assets/dist/css/classes.css" rel="stylesheet">
 <link href="/assets/vendor/morrisjs/morris.css" rel="stylesheet">
@@ -16,3 +15,6 @@
 <link href="/assets/fonts/flaticon/flaticon.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<link href="/assets/dist/css/AdminLTE.css" rel="stylesheet">
+<link href="/assets/dist/css/skins/skin-blue.min.css" rel="stylesheet">
+
