@@ -1,6 +1,5 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT']."/includes/global.functions.php");
-
+include("../../initialize.php");
 includeCore();
 
 $db_handle = new DBController();
@@ -88,9 +87,7 @@ foreach($parameters as $param) {
 
 $db_handle->runUpdate($query);
 if($db_handle->getUpdateStatus()) {
-    echo "<script type='text/javascript'>alert('Answers submitted!');
-    location='/pages/assessment.php';
-    </script>";
+    header("location: /pages/idp.assessment.history.php?id=".$idp_id."&ag=".$age_group."&status=toolsuccess");
 }
 unset($_SESSION['idpID']);
 ?>

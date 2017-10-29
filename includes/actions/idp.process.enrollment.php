@@ -1,8 +1,7 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT']."/includes/global.functions.php");
-
+include("../../initialize.php");
 includeCore();
-require_once($_SERVER['DOCUMENT_ROOT']."/includes/dbcontrollerPDO.php");
+
 $db_handle = new DBController();
 $query = "";
 $query .= "INSERT INTO `dafac_no` (`DAFAC_SN`, `Name`, `serial_no`) VALUES (NULL, :name, NULL);";
@@ -36,7 +35,11 @@ if(isset($_POST['Religion'])) $db_handle->bindVar(':Religion', $_POST['Religion'
 if(isset($_POST['Ethnicity'])) $db_handle->bindVar(':Ethnicity', $_POST['Ethnicity'], PDO::PARAM_STR,0); else $db_handle->bindNull(':Ethnicity');
 if(isset($_POST['School'])) $db_handle->bindVar(':School', $_POST['School'], PDO::PARAM_STR,0); else $db_handle->bindNull(':School');
 $db_handle->runUpdate();
-echo "<script type='text/javascript'>alert('Success!');
-location='".$_SESSION['loc']."';
-</script>";
+
+if($db_handle->getUpdateStatus())
+{
+    header("location: ".$_SESSION['loc']."?status=success");
+} else {
+    header("location: ".$_SESSION['loc']."?status=err1");
+}
 ?>

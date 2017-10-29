@@ -1,6 +1,5 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT']."/includes/global.functions.php");
-
+include("../initialize.php");
 includeCore();
 
 ?>
@@ -10,7 +9,7 @@ includeCore();
     <head>
 
         <?php
-        setTitle("PSRMS - Evacuation Centers");
+        includeHead("PSRMS - Evacuation Centers");
         includeDataTables();
         ?>
 

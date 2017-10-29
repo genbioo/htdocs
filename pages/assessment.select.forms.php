@@ -1,6 +1,5 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT']."/includes/global.functions.php");
-
+include("../initialize.php");
 includeCore();
 
 $_SESSION['loc'] = $_SERVER['PHP_SELF'];
@@ -15,7 +14,7 @@ $toolsList = getAllAssessmentTools();
 
     <head>
 
-        <?php setTitle("PSRMS - Apply Assessment Tool"); ?>
+        <?php includeHead("PSRMS - Apply Assessment Tool"); ?>
 
     </head>
 
@@ -56,7 +55,7 @@ $toolsList = getAllAssessmentTools();
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <form action="assessment.informed.consent.php" method="post">
+                            <form action="assessment.informed.consent.php?from=tools" method="post">
                                 <div class="form-group">
                                     <div class="col-md-12"><p>Select Tool(s):</p></div>
                                     <div class="col-md-12">

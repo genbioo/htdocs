@@ -1,7 +1,7 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT']."/includes/global.functions.php");
-
+include("../../initialize.php");
 includeCore();
+
 $db_handle = new DBController();
 $previous = $_SERVER['HTTP_REFERER'];
 $post_values = $_POST;

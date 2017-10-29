@@ -1,6 +1,5 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT']."/includes/global.functions.php");
-
+include("../initialize.php");
 includeCore();
 
 $_SESSION['loc'] = $_SERVER['PHP_SELF'];
@@ -15,7 +14,7 @@ $evac_centers = getEvacuationCenters();
 
     <head>
 
-        <?php setTitle("PSRMS - IDP Enrollment"); ?>
+        <?php includeHead("PSRMS - IDP Enrollment"); ?>
 
     </head>
 
@@ -31,6 +30,25 @@ $evac_centers = getEvacuationCenters();
                     <div class="header">
                         <h3 class="title">&nbsp;IDP Enrollment</h3>
                     </div>
+                    <?php
+                    if(isset($_GET['status']) && $_GET['status'] == 'success')
+                    {
+                    ?>
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        Registration Successful!
+                    </div>
+                    <?php
+                    } else if (isset($_GET['status']) && $_GET['status'] == 'err1')
+                    {
+                    ?>
+                    <div class="alert alert-danger alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        An error occured during the process. If this issue persists, please contact the system admin.
+                    </div>
+                    <?php
+                    }
+                    ?>
                 </div>
 
                 <div class="row">

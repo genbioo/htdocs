@@ -1,7 +1,7 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT']."/includes/global.functions.php");
-
+include("../initialize.php");
 includeCore();
+
 includeLayoutGenerator();
 
 $toolIDs = json_decode($_POST["toolID"]);
@@ -15,7 +15,7 @@ $questionsResult = getAssessmentQuestions('Tool',$toolIDs);
 
     <head>
 
-        <?php setTitle("PSRMS - Apply Assessment Tool"); ?>
+        <?php includeHead("PSRMS - Apply Assessment Tool"); ?>
 
     </head>
 
@@ -26,7 +26,7 @@ $questionsResult = getAssessmentQuestions('Tool',$toolIDs);
             <div id="exam-wrapper">
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
-                        <form action="/includes/actions/process_assessment_answers.php" method="post">
+                        <form action="/includes/actions/assessment.process.answers.tool.php" method="post">
                             <?php echo(displayQuestions($questionsResult, $form_info, $idpName)); ?>
                         <div class="col-md-12">
                             <button id="btn-submit-form" class="btn btn-primary btn-md" type="submit"><i class="fa fa-check"></i>&nbsp;Submit</button>

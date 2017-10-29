@@ -1,7 +1,7 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT']."/includes/global.functions.php");
-
+include("../initialize.php");
 includeCore();
+
 includeLayoutGenerator();
 
 $id = $_GET['form_id'];
@@ -29,7 +29,7 @@ if(!empty($questions)) {
 
     <head>
 
-        <?php setTitle("PSRMS - Edit Tool"); ?>
+        <?php includeHead("PSRMS - Edit Tool"); ?>
 
     </head>
 

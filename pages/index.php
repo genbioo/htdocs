@@ -1,15 +1,13 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT']."/includes/global.functions.php");
-
+include("../initialize.php");
 includeCore();
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
     <head>
 
-        <?php setTitle("PSRMS - Dashboard"); ?>
+        <?php includeHead("PSRMS - Dashboard"); ?>
 
     </head>
 

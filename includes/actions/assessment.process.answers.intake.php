@@ -1,5 +1,5 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT']."/includes/global.functions.php");
+include("../../initialize.php");
 includeCore();
 
 $db_handle = new DBController();
@@ -28,45 +28,43 @@ $db_handle->runUpdate();
 
 $idp_form_answers_id = $db_handle->getLastInsertID();
 
-$parameters = array(); //array of parameters for PDO binding
-$paramNum = 0;
 foreach($post as $key => $answers) {
-    
-    $temp_answertype = substr($key, 0, 1);
-    $temp_qid = substr($key, 2);
-    
-    if($temp_answertype === '1') {
-        $paramNum++;
-        $query .= "INSERT INTO `answers_quanti` (`ANSWERS_QUANTI_ID`, `Answer`, `QUESTIONS_QuestionsID`, `FORM_ANWERS_FORM_ANSWERS_ID`, `INTAKE_ANSWERS_INTAKE_ANSWERS_ID`) VALUES ( NULL, :answer".$paramNum.", :qid".$paramNum.", NULL, :faid".$paramNum.");";
-        $parameters[] = array('answer'.$paramNum => $answers, 'qid'.$paramNum => $temp_qid, 'faid'.$paramNum => $idp_form_answers_id, 'type'.$paramNum => 'quanti');
-    } else if($temp_answertype === '2') {
-        $paramNum++;
-        if($answers == '') {
-            $query .= "INSERT INTO `answers_quali` (`ANSWERS_QUALI_ID`, `Answer`, `QUESTIONS_QuestionsID`, `FORM_ANSWERS_FORM_ANSWERS_ID`, `INTAKE_ANSWERS_INTAKE_ANSWERS_ID`) VALUES ( NULL, :answer".$paramNum.", :qid".$paramNum.", NULL, :faid".$paramNum.");";
-            $parameters[] = array('answer'.$paramNum => "(blank)", 'qid'.$paramNum => $temp_qid, 'faid'.$paramNum => $idp_form_answers_id, 'type'.$paramNum => 'quali');
-        } else {
-            $query .= "INSERT INTO `answers_quali` (`ANSWERS_QUALI_ID`, `Answer`, `QUESTIONS_QuestionsID`, `FORM_ANSWERS_FORM_ANSWERS_ID`, `INTAKE_ANSWERS_INTAKE_ANSWERS_ID`) VALUES ( NULL, :answer".$paramNum.", :qid".$paramNum.", NULL, :faid".$paramNum.");";
-            $parameters[] = array('answer'.$paramNum => $answers, 'qid'.$paramNum => $temp_qid, 'faid'.$paramNum => $idp_form_answers_id, 'type'.$paramNum => 'quali');
+    if(substr($key, 0, 1) != 'q')
+    {
+        $temp_answertype = substr($key, 2, 1);
+        $temp_qid = substr($key, 4);
+        if($temp_answertype == '1') {
+            $paramNum++;
+            $query .= "INSERT INTO `answers_quanti` (`ANSWERS_QUANTI_ID`, `Answer`, `QUESTIONS_QuestionsID`, `FORM_ANWERS_FORM_ANSWERS_ID`, `INTAKE_ANSWERS_INTAKE_ANSWERS_ID`) VALUES ( NULL, :answer".$paramNum.", :qid".$paramNum.", NULL, :faid".$paramNum.");";
+            $parameters[] = array('answer'.$paramNum => $answers, 'qid'.$paramNum => $temp_qid, 'faid'.$paramNum => $idp_form_answers_id, 'type'.$paramNum => 'quanti');
+        } else if($temp_answertype == '2') {
+            $paramNum++;
+            if($answers == '') {
+                $query .= "INSERT INTO `answers_quali` (`ANSWERS_QUALI_ID`, `Answer`, `QUESTIONS_QuestionsID`, `FORM_ANSWERS_FORM_ANSWERS_ID`, `INTAKE_ANSWERS_INTAKE_ANSWERS_ID`) VALUES ( NULL, :answer".$paramNum.", :qid".$paramNum.", NULL, :faid".$paramNum.");";
+                $parameters[] = array('answer'.$paramNum => "(blank)", 'qid'.$paramNum => $temp_qid, 'faid'.$paramNum => $idp_form_answers_id, 'type'.$paramNum => 'quali');
+            } else {
+                $query .= "INSERT INTO `answers_quali` (`ANSWERS_QUALI_ID`, `Answer`, `QUESTIONS_QuestionsID`, `FORM_ANSWERS_FORM_ANSWERS_ID`, `INTAKE_ANSWERS_INTAKE_ANSWERS_ID`) VALUES ( NULL, :answer".$paramNum.", :qid".$paramNum.", NULL, :faid".$paramNum.");";
+                $parameters[] = array('answer'.$paramNum => $answers, 'qid'.$paramNum => $temp_qid, 'faid'.$paramNum => $idp_form_answers_id, 'type'.$paramNum => 'quali');
+            }
         }
     }
-    
+
     $temp_answertype = "";
     $temp_qid = "";
-    
-}
 
+}
 $db_handle->prepareStatement($query);
 $paramNum = 0;
 foreach($parameters as $param) {
-    
+
     $paramNum++;
-    
+
     if($param['type'.$paramNum] == 'quanti') {
         $db_handle->bindVar(':answer'.$paramNum, $param['answer'.$paramNum], PDO::PARAM_INT,0);
     } else {
         $db_handle->bindVar(':answer'.$paramNum, $param['answer'.$paramNum], PDO::PARAM_STR,0);
     }
-    
+
     $db_handle->bindVar(':qid'.$paramNum, $param['qid'.$paramNum], PDO::PARAM_INT,0);
     $db_handle->bindVar(':faid'.$paramNum, $param['faid'.$paramNum], PDO::PARAM_INT,0);
 }
@@ -74,8 +72,6 @@ foreach($parameters as $param) {
 $db_handle->runUpdate();
 
 if($db_handle->getUpdateStatus()) {
-    echo "<script type='text/javascript'>alert('Answers submitted!');
-    location='".$_SESSION['loc']."';
-    </script>";
+    header("location: /pages/idp.assessment.history.php?id=".$idp_id."&ag=".$age_group."&status=intakesuccess");
 }
 ?>

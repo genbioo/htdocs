@@ -1,6 +1,5 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT']."/includes/global.functions.php");
-
+include("../initialize.php");
 includeCore();
 
 $_SESSION['loc'] = $_SERVER['PHP_SELF'];
@@ -13,8 +12,7 @@ $_SESSION['disaster_id'] = 1;
     <head>
 
         <?php
-        setTitle("PSRMS - IDP Assessment");
-        
+        includeHead("PSRMS - IDP Assessment");
         includeDataTables();
         ?>
 
@@ -30,7 +28,7 @@ $_SESSION['disaster_id'] = 1;
                 <!-- /.row -->
                 <div class="row">
                     <div class="header">
-                        <h3 class="title">&nbsp;Enrolled IDPs&nbsp;<a href="idp.enroll.php" type="button" class="btn btn-success btn-md btn-fill">Add New IDP</a></h3>
+                        <h3 class="title">&nbsp;Enrolled IDPs&nbsp;<a href="idp.enroll.php" type="button" class="btn btn-success btn-xs btn-fill">Add New IDP</a></h3>
                     </div>
                     <div class="col-lg-12">
                         <div class="panel panel-default">
@@ -40,7 +38,6 @@ $_SESSION['disaster_id'] = 1;
                                     <thead>
                                         <tr>
                                             <th align="left"><b>Name</b></th>
-                                            <th align="left"><b>Family ID</b></th>
                                             <th align="left"><b>IDP ID</b></th>
                                             <th align="left"><b>Gender</b></th>
                                             <th align="left"><b>Age</b></th>
@@ -67,14 +64,14 @@ $_SESSION['disaster_id'] = 1;
 
     </body>
     <script>
-        window.load_modal = function(clicked_id) {
-            $("#modal-container").load("/includes/fragments/idp_assessment_modal.php?id="+clicked_id, function() {
-                $("#modalToggle").attr('data-target', '#myModal'+clicked_id);
+        window.loadModal = function(clickedID) {
+            $("#modal-container").load("/includes/fragments/idp_assessment_modal.php?id="+clickedID, function() {
+                $("#modalToggle").attr('data-target', '#myModal'+clickedID);
                 $("#modalToggle").click();
             });
         }
-        function printDiv(clicked_id) {
-            var divToPrint=document.getElementById('myModal' + clicked_id);
+        function printDiv(clickedID) {
+            var divToPrint=document.getElementById('myModal' + clickedID);
             var newWin=window.open('','Print-Window');
             newWin.document.open();
             newWin.document.write('<html><body onload="window.print()">'+divToPrint.innerHTML+'</body></html>');
@@ -88,12 +85,12 @@ $_SESSION['disaster_id'] = 1;
                 "serverSide": true,
                 "order":[],
                 "ajax":{
-                    url :"/includes/actions/assessment.generate.list.php",
+                    url :"<?php echo(ROOT); ?>includes/actions/assessment.generate.list.php",
                     method: "POST",
                 },
                 "columnDefs":[
                     {
-                        "targets": [5],
+                        "targets": [4],
                         "orderable":false
                     },
                 ]
