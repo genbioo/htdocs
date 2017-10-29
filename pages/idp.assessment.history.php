@@ -1,11 +1,12 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT']."/includes/global.functions.php");
-
+include("../initialize.php");
 includeCore();
 
 $id = $_GET['id'];
+$ag = getAgeGroup($id)[0]['AgeGroup'];
 
 $idp = getIDPExtensiveDetails($id);
+$intakeCount = getIntakeCount($id);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +14,7 @@ $idp = getIDPExtensiveDetails($id);
     <head>
 
         <?php 
-        setTitle("PSRMS - Assessment History"); 
+        includeHead("PSRMS - Assessment History"); 
         includeDataTables();
         ?>
 
@@ -30,11 +31,42 @@ $idp = getIDPExtensiveDetails($id);
                         <h1 class="page-header"><?php echo($idp[0]['IDPName']); ?></h1>
                     </div>
                 </div>
+                <?php
+                if(isset($_GET['status']) && $_GET['status'] == 'intakesuccess')
+                {
+                ?>
+                <div class="alert alert-success alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    Intake answers are saved successfully!
+                </div>
+                <?php
+                } else if (isset($_GET['status']) && $_GET['status'] == 'toolsuccess')
+                {
+                ?>
+                <div class="alert alert-success alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    Assessment tool answers are saved successfully!
+                </div>
+                <?php
+                } else if (isset($_GET['status']) && $_GET['status'] == 'err1')
+                {
+                ?>
+                <div class="alert alert-danger alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    An error occured during the process. If this issue persists, please contact the system admin.
+                </div>
+                <?php
+                }
+                ?>
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h4 class="title">&nbsp;Intakes taken</h4>
+                                <h4 class="title">&nbsp;Intakes taken&nbsp;
+                                    <a href="assessment.informed.consent.php?id=<?php echo($id); ?>&ag=<?php echo($ag); ?>&from=intake" class="btn btn-success btn-xs btn-fill">
+                                        <i class="icon_check_alt"></i>Apply Intake
+                                    </a>
+                                </h4>
                             </div>
                             <div class="panel-body">
                                 <table width="100%" class="table table-bordered table-hover" id="table-intake-list">
@@ -53,7 +85,18 @@ $idp = getIDPExtensiveDetails($id);
                         </div>
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h4 class="title">&nbsp;Assessment tools taken</h4>
+                                <h4 class="title">&nbsp;Assessment tools taken&nbsp;
+                                    <?php
+                                    if($intakeCount[0]['count'] !== '0')
+                                    {
+                                    ?>
+                                    <a href="assessment.select.forms.php?id=<?php echo($id); ?>" class="btn btn-success btn-xs btn-fill" id="assessmentButton">
+                                        <i class="icon_check_alt"></i>Apply Assessment tool
+                                    </a>
+                                    <?php
+                                    }
+                                    ?>
+                                </h4>
                             </div>
                             <div class="panel-body">
                                 <table width="100%" class="table table-bordered table-hover" id="table-assessment-list">
@@ -79,7 +122,7 @@ $idp = getIDPExtensiveDetails($id);
     </body>
     <script>
         $(document).ready(function() {
-            var dataTable = $('#table-intake-list').DataTable( {
+            var intakeDataTable = $('#table-intake-list').DataTable( {
                 "responsive": true,
                 "processing": true,
                 "serverSide": true,
@@ -98,7 +141,7 @@ $idp = getIDPExtensiveDetails($id);
             } );
         } );
         $(document).ready(function() {
-            var dataTable = $('#table-assessment-list').DataTable( {
+            var assessmentDataTable = $('#table-assessment-list').DataTable( {
                 "responsive": true,
                 "processing": true,
                 "serverSide": true,

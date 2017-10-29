@@ -1,7 +1,7 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT']."/includes/global.functions.php");
-
+include("../../initialize.php");
 includeCore();
+
 $db_handle = new DBController();
 $idp_id = $_GET['id'];
 $db_handle->prepareStatement("SELECT * FROM `idp` WHERE idp.IDP_ID = :id");

@@ -1,7 +1,7 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT']."/includes/global.functions.php");
-
+include("../../initialize.php");
 includeCore();
+
 $formID = $_POST['formID'];
 $questTranslations = array();   //final associative array of tokenized questions and translations
 $languages = array();           //array of available translation languages *updates in the question display foreach section

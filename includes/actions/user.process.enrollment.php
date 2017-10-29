@@ -1,6 +1,7 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT']."/includes/global.functions.php");
+include("../../initialize.php");
 includeCore();
+
 $db_handle = new DBController();
 //echo(json_encode($_POST));
 if($_POST["pwd1"] != $_POST["pwd2"]) {

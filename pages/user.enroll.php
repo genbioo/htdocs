@@ -1,6 +1,5 @@
 <?php 
-include($_SERVER['DOCUMENT_ROOT']."/includes/global.functions.php");
-
+include("../initialize.php");
 includeCore();
 
 $_SESSION['loc'] = $_SERVER['PHP_SELF'];
@@ -13,7 +12,7 @@ $agencies = getAgencies();
 
     <head>
 
-        <?php setTitle("PSRMS - Account Management"); ?>
+        <?php includeHead("PSRMS - Account Management"); ?>
 
     </head>
 

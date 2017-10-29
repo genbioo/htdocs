@@ -1,7 +1,7 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT']."/includes/global.functions.php");
-
+include("../initialize.php");
 includeCore();
+
 includeLayoutGenerator();
 
 $ageGroup = $_GET['ag'];
@@ -18,7 +18,7 @@ $idpInfo = getIDPExtensiveDetails($idpID);
 
     <head>
 
-        <?php setTitle("PSRMS - Apply Intake"); ?>
+        <?php includeHead("PSRMS - Apply Intake"); ?>
 
     </head>
 
@@ -68,7 +68,7 @@ $idpInfo = getIDPExtensiveDetails($idpID);
                             }
                             ?>
                         </div>
-                        <form action="/includes/actions/process_intake_answers.php?id=<?php echo($idpID); ?>&ag=<?php echo($ageGroup); ?>" method="post">
+                        <form action="/includes/actions/assessment.process.answers.intake.php?id=<?php echo($idpID); ?>&ag=<?php echo($ageGroup); ?>" method="post">
                             <?php echo(displayQuestions($questions, $formInfo, '')); ?>
                         <div class="col-md-12">
                             <button id="btn-submit-form" class="btn btn-primary btn-md" type="submit"><i class="fa fa-check"></i>&nbsp;Submit</button>
