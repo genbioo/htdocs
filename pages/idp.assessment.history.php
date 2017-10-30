@@ -20,12 +20,19 @@ $intakeCount = getIntakeCount($id);
 
     </head>
 
-    <body>
+    <body class="hold-transition skin-blue sidebar-mini fixed">
 
-        <div id="wrapper">
-            <?php includeNav(); ?>
+        <div class="wrapper">
+            
+           <?php includeNav(); ?>
 
-            <div id="page-wrapper">
+           <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+
+            <!-- Main content -->
+            <section class="content container-fluid">
+
+              <div id="page-wrapper">
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header"><?php echo($idp[0]['IDPName']); ?></h1>
@@ -115,11 +122,19 @@ $intakeCount = getIntakeCount($id);
                     </div>
                 </div>
             </div>
+
+            </section>
+            <!-- /.content -->
+          </div>
+
         </div>
+        <!-- /#wrapper -->
+
 
         <?php includeCommonJS(); ?>
 
     </body>
+
     <script>
         $(document).ready(function() {
             var intakeDataTable = $('#table-intake-list').DataTable( {

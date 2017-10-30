@@ -602,7 +602,8 @@ function getList($data, $listType = 'IDP', $listTarget = '')
                         </a>
                         <a href="assessment.informed.consent.php?id='.$row["IDP_ID"].'&ag='.$row["age_group"].'&from=intake" class="btn btn-success btn-xs btn-block">
                             <i class="icon_check_alt"></i>Apply Intake
-                        </a>';
+                         </a>
+                        </div>';
                 } 
                 else
                 {

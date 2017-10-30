@@ -21,13 +21,20 @@ $idpInfo = getIDPExtensiveDetails($idpID);
         <?php includeHead("PSRMS - Apply Intake"); ?>
 
     </head>
+    
+    <body class="hold-transition skin-blue sidebar-mini fixed">
 
-    <body>
+        <div class="wrapper">
+            
+           <?php includeNav(); ?>
 
-        <div id="wrapper">
+           <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
 
-            <div id="exam-wrapper">
-                <div class="row">
+            <!-- Main content -->
+            <section class="content container-fluid">
+
+              <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="well" id="accordion">
                             <?php
@@ -76,13 +83,19 @@ $idpInfo = getIDPExtensiveDetails($idpID);
                         </form>
                     </div>
                 </div>
-            </div>
+
+            </section>
+            <!-- /.content -->
+          </div>
 
         </div>
+        <!-- /#wrapper -->
+
 
         <?php includeCommonJS(); ?>
 
     </body>
+
     <script type="text/javascript">
         //show first translation as default
         $('div[name*="Original"]').show().siblings().hide();

@@ -32,12 +32,20 @@ if(!empty($questions)) {
         <?php includeHead("PSRMS - Edit Tool"); ?>
 
     </head>
+    
+    <body class="hold-transition skin-blue sidebar-mini fixed">
 
-    <body>
+        <div class="wrapper">
+            
+           <?php includeNav(); ?>
 
-        <div id="wrapper">
-            <?php includeNav(); ?>
-            <div id="page-wrapper">
+           <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+
+            <!-- Main content -->
+            <section class="content container-fluid">
+
+              <div id="page-wrapper">
                 
                 <!-- /.row -->
                 <div class="row">
@@ -247,11 +255,15 @@ if(!empty($questions)) {
                     </div><!--card end-->
                 </div>
                 <!-- /.row -->
-            </div>
-            <!-- /#page-wrapper -->
+
+            </section>
+            <!-- /.content -->
+          </div>
 
         </div>
         <!-- /#wrapper -->
+
+
         <div id="addQuestion" class="modal fade" role="dialog"><!-- Add Question modal -->
             <div class="modal-dialog">
 
@@ -302,6 +314,13 @@ if(!empty($questions)) {
         </div>
 
         <?php includeCommonJS(); ?>
+
+    </body>
+
+    <body>
+
+        
+        
 
     </body>
     <script type="text/javascript">
