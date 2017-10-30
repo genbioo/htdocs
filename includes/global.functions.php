@@ -597,25 +597,24 @@ function getList($data, $listType = 'IDP', $listTarget = '')
 
                 if($row['intake_answersID'] == 0) {
                     $subArray[] = 
-                        '<a class="btn btn-info btn-xs btn-fill" href="idp.assessment.history.php?id='.$row["IDP_ID"].'">
+                        '<a class="btn btn-info btn-sm btn-block" href="idp.assessment.history.php?id='.$row["IDP_ID"].'">
                             <i class="pe-7s-info"></i>Assessment History
                         </a>
-                        <br>
-                        <a href="assessment.informed.consent.php?id='.$row["IDP_ID"].'&ag='.$row["age_group"].'&from=intake" class="btn btn-success btn-xs btn-fill">
+                        <a href="assessment.informed.consent.php?id='.$row["IDP_ID"].'&ag='.$row["age_group"].'&from=intake" class="btn btn-success btn-xs btn-block">
                             <i class="icon_check_alt"></i>Apply Intake
                         </a>';
                 } 
                 else
                 {
                     $subArray[] = 
-                        '<a class="btn btn-info btn-xs btn-fill" href="idp.assessment.history.php?id='.$row["IDP_ID"].'">
+                        '<a class="btn btn-info btn-sm btn-block" href="idp.assessment.history.php?id='.$row["IDP_ID"].'">
                             <i class="pe-7s-info"></i>Assessment History
                          </a>
-                         <br>
-                         <a href="assessment.select.forms.php?id='.$row["IDP_ID"].'" class="btn btn-primary btn-xs btn-fill">Apply Assessment Tool</a>
-                         <br>
-                         <a href="assessment.informed.consent.php?id='.$row["IDP_ID"].'&ag='.$row["age_group"].'&from=intake" class="btn btn-success btn-xs btn-fill">
+                         <a href="assessment.informed.consent.php?id='.$row["IDP_ID"].'&ag='.$row["age_group"].'&from=intake" class="btn btn-success btn-xs btn-block">
                             <i class="icon_check_alt"></i>Apply Intake
+                         </a>
+                         <a href="assessment.select.forms.php?id='.$row["IDP_ID"].'" class="btn btn-primary btn-xs btn-block">
+                                Apply Assessment Tool
                          </a>';
                 }
             }
@@ -626,7 +625,7 @@ function getList($data, $listType = 'IDP', $listTarget = '')
                 $subArray["DT_RowId"] = $row["FormID"];
                 $subArray[] = $row["FormType"];
                 $subArray[] = 
-                    '<a class="btn btn-info btn-sm center-block" href="forms.edit.tool.php?form_id='.$row["FormID"].'">
+                    '<a class="btn btn-info btn-xs center-block" href="forms.edit.tool.php?form_id='.$row["FormID"].'">
                         <i class="fa fa-pencil-square-o"></i>Edit Tool
                      </a>';
             }

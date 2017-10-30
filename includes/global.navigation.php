@@ -50,9 +50,14 @@
                     <a href="idp.list.php" id="idpMenu"><i class="fa fa-address-card-o fa-fw"></i> IDPs</a>
                     <!-- /.nav-second-level -->
                 </li>
+                <?php
+                if($_SESSION["account_type"] == '77') {
+                ?>
                 <li>
                     <a href="forms.manage.tools.php"><i class="fa fa-file-text-o fa-fw"></i> Assessment Tools</a>
                 </li>
+                <?php
+                } ?>
                 <li>
                     <a href="evac.manage.centers.php"><i class="fa fa-home fa-fw"></i> Evacuation Centers</a>
                 </li>
