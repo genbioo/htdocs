@@ -170,7 +170,12 @@ $intakeCount = getIntakeCount($id);
                         "targets": [3],
                         "orderable":false
                     },
-                ]
+                ],
+                "createdRow": function( row, data, dataIndex ) {
+                    if ( data[3] != "No auto-assessment available for this tool." && data[3] != "Below cutoff") {        
+                        $(row).addClass('danger');
+                    }
+                }
             } );
         } );
     </script>
