@@ -1,91 +1,77 @@
-<header class="main-header fixed">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.php">PSRMS</a>
+    </div>
+    <!-- /.navbar-header -->
 
-    <!-- Logo -->
-    <a href="index2.html" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini">PSRMS</span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg">PSRMS</span>
-    </a>
-
-    <!-- Header Navbar -->
-    <nav class="navbar navbar-static-top" role="navigation">
-
-      <!-- Navbar Right Menu -->
-      <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">
-          <!-- User Account Menu -->
-          <li class="dropdown user user-menu">
-            <!-- Menu Toggle Button -->
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <!-- The user image in the navbar-->
-              <span class="hidden-xs">Admin</span>
+    <ul class="nav navbar-top-links navbar-right">
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
             </a>
-            <ul class="dropdown-menu">
-              <!-- The user image in the menu -->
-              <li class="user-header">
-                <p>
-                  Admin-PSRMS
-                </p>
-              </li>
-              <!-- Menu Footer-->
-              <li class="user-footer">
-                <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
-                </div>
-                <div class="pull-right">
-                  <a href="/includes/actions/global.logout.php" class="btn btn-default btn-flat">Sign out</a>
-                </div>
-              </li>
+            <ul class="dropdown-menu dropdown-user">
+                <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                </li>
+                <li class="divider"></li>
+                <li><a href="/includes/actions/global.logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                </li>
             </ul>
-          </li>
-          <!-- Control Sidebar Toggle Button -->
-        </ul>
-      </div>
-    </nav>
-  </header>
+            <!-- /.dropdown-user -->
+        </li>
+        <!-- /.dropdown -->
+    </ul>
+    <!-- /.navbar-top-links -->
 
-  <aside class="main-sidebar fixed">
-  <section class="sidebar">
-      
-      <!-- search form (Optional) -->
-      <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-          <span class="input-group-btn">
-              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-              </button>
-            </span>
+    <div class="navbar-default sidebar" role="navigation">
+        <div class="sidebar-nav navbar-collapse">
+            <ul class="nav" id="side-menu">
+                <li class="sidebar-search">
+                    <div class="input-group custom-search-form">
+                        <input type="text" class="form-control" placeholder="Search...">
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                    </div>
+                    <!-- /input-group -->
+                </li>
+                <li>
+                    <a href="index.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                </li>
+                <li>
+                    <a href="idp.list.php" id="idpMenu"><i class="fa fa-address-card-o fa-fw"></i> IDPs</a>
+                    <!-- /.nav-second-level -->
+                </li>
+                <?php
+                if($_SESSION["account_type"] == '77') {
+                ?>
+                <li>
+                    <a href="forms.manage.tools.php"><i class="fa fa-file-text-o fa-fw"></i> Assessment Tools</a>
+                </li>
+                <?php
+                } ?>
+                <li>
+                    <a href="evac.manage.centers.php"><i class="fa fa-home fa-fw"></i> Evacuation Centers</a>
+                </li>
+                <?php
+                if($_SESSION["account_type"] == '77') {
+                ?>
+                <li>
+                    <a href="user.enroll.php"><i class="fa fa-key fa-fw"></i> Account Management</a>
+                </li>
+                <?php
+                } ?>
+            </ul>
         </div>
-      </form>
-      <!-- /.search form -->
-
-      <!-- Sidebar Menu -->
-      <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MAIN NAVIGATION</li>
-        <li <?= isset($active) && $active =='' ? 'class="active"': null ?>>
-            <a href="index.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-        </li>
-        <li <?= isset($active) && $active =='' ? 'class="active"': null ?>>
-            <a href="idp.list.php" id="idpMenu"><i class="fa fa-address-card-o fa-fw"></i> IDPs</a>
-            <!-- /.nav-second-level -->
-        </li>
-        <li <?= isset($active) && $active =='' ? 'class="active"': null ?>>
-            <a href="forms.manage.tools.php"><i class="fa fa-file-text-o fa-fw"></i> Assessment Tools</a>
-        </li>
-        <li <?= isset($active) && $active =='' ? 'class="active"': null ?>>
-            <a href="evac.manage.centers.php"><i class="fa fa-home fa-fw"></i> Evacuation Centers</a>
-        </li>
-        <?php
-        if($_SESSION["account_type"] == '77') {
-        ?>
-        <li <?= isset($active) && $active =='' ? 'class="active"': null ?>>
-            <a href="user.enroll.php"><i class="fa fa-key fa-fw"></i> Account Management</a>
-        </li>
-        <?php
-        } ?>
-      </ul>
-      <!-- /.sidebar-menu -->
-    </section>
-    <!-- /.sidebar -->
-  </aside>
+        <!-- /.sidebar-collapse -->
+    </div>
+    <!-- /.navbar-static-side -->
+</nav>

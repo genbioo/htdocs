@@ -27,19 +27,11 @@ if($_GET['from'] == 'intake')
 
     </head>
 
-    <body class="hold-transition skin-blue sidebar-mini fixed">
+    <body>
 
-        <div class="wrapper">
-            
-           <?php includeNav(); ?>
+        <div id="wrapper">
 
-           <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-
-            <!-- Main content -->
-            <section class="content container-fluid">
-
-              <div id="exam-wrapper">
+            <div id="exam-wrapper">
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="well">
@@ -82,18 +74,11 @@ if($_GET['from'] == 'intake')
                 </div>
             </div>
 
-            </section>
-            <!-- /.content -->
-          </div>
-
         </div>
-        <!-- /#wrapper -->
-
 
         <?php includeCommonJS(); ?>
 
     </body>
-    
     <script type="text/javascript">
         $('#consent').click(function(){
             if($(this).is(':checked')){

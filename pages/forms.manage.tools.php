@@ -14,27 +14,17 @@ includeCore();
         ?>
 
     </head>
-    
-    <body class="hold-transition skin-blue sidebar-mini fixed">
 
-        <div class="wrapper">
-            
-           <?php includeNav(); ?>
-
-           <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-
-            <!-- Main content -->
-            <section class="content container-fluid">
-
-              <div id="page-wrapper">
+    <body>
+        
+        <div id="wrapper">
+            <?php includeNav(); ?>
+            <div id="page-wrapper">
                 <!-- /.row -->
                 <div class="row">
-                    <section class="content-header">
-                      <h1>
-                        Assessment Tools
-                      </h1>
-                    </section>
+                    <div class="header">
+                        <h3 class="title">&nbsp;Assessment Tools</h3>
+                    </div>
                     <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-body">
@@ -58,18 +48,12 @@ includeCore();
             </div>
             <!-- /#page-wrapper -->
 
-            </section>
-            <!-- /.content -->
-          </div>
-
         </div>
         <!-- /#wrapper -->
-
 
         <?php includeCommonJS(); ?>
 
     </body>
-
     <script>
         $(document).ready(function() {
             var dataTable = $('#table-tool-list').DataTable( {

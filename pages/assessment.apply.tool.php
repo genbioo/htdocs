@@ -18,20 +18,12 @@ $questionsResult = getAssessmentQuestions('Tool',$toolIDs);
         <?php includeHead("PSRMS - Apply Assessment Tool"); ?>
 
     </head>
-    
-    <body class="hold-transition skin-blue sidebar-mini fixed">
 
-        <div class="wrapper">
-            
-           <?php includeNav(); ?>
+    <body>
 
-           <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
+        <div id="wrapper">
 
-            <!-- Main content -->
-            <section class="content container-fluid">
-
-              <div id="exam-wrapper">
+            <div id="exam-wrapper">
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <form action="/includes/actions/assessment.process.answers.tool.php" method="post">
@@ -44,18 +36,11 @@ $questionsResult = getAssessmentQuestions('Tool',$toolIDs);
                 </div>
             </div>
 
-            </section>
-            <!-- /.content -->
-          </div>
-
         </div>
-        <!-- /#wrapper -->
-
 
         <?php includeCommonJS(); ?>
 
     </body>
-    
     <script type="text/javascript">
         //show first translation as default
         $('div[name*="Original"]').show().siblings().hide();

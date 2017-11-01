@@ -602,8 +602,7 @@ function getList($data, $listType = 'IDP', $listTarget = '')
                         </a>
                         <a href="assessment.informed.consent.php?id='.$row["IDP_ID"].'&ag='.$row["age_group"].'&from=intake" class="btn btn-success btn-xs btn-block">
                             <i class="icon_check_alt"></i>Apply Intake
-                         </a>
-                        </div>';
+                        </a>';
                 } 
                 else
                 {
@@ -718,24 +717,7 @@ function get_total_all_records($type, $target = '')
     }
     else if($type === 'Assessment_taken')
     {
-        $db_handle->prepareStatement("SELECT COUNT(FormType) AS total
-                   FROM
-                        (SELECT form_answers.IDP_IDP_ID, form_answers.FORM_ANSWERS_ID, FormType, form_answers.USER_UserID, form_answers.DateTaken, form_answers.UnansweredItems,
-                            CONCAT(user.Lname, ', ', user.Fname, ' ', user.Mname) as User,
-                            auto_assmt.Assessment, auto_assmt.Cutoff,auto_assmt.FORM_FormID
-                        FROM form_answers
-                        JOIN form ON form.FormID = form_answers.FORM_FormID
-                        JOIN user ON user.UserID = form_answers.USER_UserID
-                        LEFT JOIN auto_assmt ON auto_assmt.FORM_FormID = form_answers.FORM_FormID
-                        WHERE form_answers.IDP_IDP_ID = :id) A
-                   RIGHT JOIN
-                        (SELECT DISTINCT(IDP_IDP_ID), FORM_ANSWERS_ID,
-                            COALESCE(SUM(answers_quanti.Answer),0) as Score
-                        FROM answers_quanti
-                        RIGHT JOIN form_answers ON form_answers.FORM_ANSWERS_ID = answers_quanti.FORM_ANWERS_FORM_ANSWERS_ID
-                        WHERE form_answers.IDP_IDP_ID = :id
-                        GROUP BY FORM_ANWERS_FORM_ANSWERS_ID) B
-                   ON A.FORM_ANSWERS_ID = B.FORM_ANSWERS_ID");
+        $db_handle->prepareStatement("SELECT COUNT(*) AS total FROM form_answers WHERE form_answers.IDP_IDP_ID = :id");
         $db_handle->bindVar(':id', $target, PDO::PARAM_INT, 0);
         $result = $db_handle->runFetch();
     }

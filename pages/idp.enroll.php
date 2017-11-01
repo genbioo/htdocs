@@ -18,26 +18,18 @@ $evac_centers = getEvacuationCenters();
 
     </head>
 
-    <body class="hold-transition skin-blue sidebar-mini fixed">
+    <body>
 
-        <div class="wrapper">
-            
-           <?php includeNav(); ?>
+        <div id="wrapper">
 
-           <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
+            <?php includeNav(); ?>
 
-            <!-- Main content -->
-            <section class="content container-fluid">
-
-              <div id="page-wrapper">
+            <div id="page-wrapper">
 
                 <div class="row">
-                    <section class="content-header">
-                      <h1>
-                        IDP Enroll
-                      </h1>
-                    </section>
+                    <div class="header">
+                        <h3 class="title">&nbsp;IDP Enrollment</h3>
+                    </div>
                     <?php
                     if(isset($_GET['status']) && $_GET['status'] == 'success')
                     {
@@ -65,10 +57,12 @@ $evac_centers = getEvacuationCenters();
 
                         <div class="col-md-12">
                             <div  id = "personal_info_div" class="col-lg-6">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <b>Personal Information</b>
-                                    </div>
+                                <div class="panel panel-info">
+
+                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                        <div class="panel-heading"><h6><b>Personal Information</b></h6></div>
+                                    </a>
+
                                     <div class="panel-body panel-collapse collapse in" id="collapseOne">
 
                                         <div class="form-group col-md-6">
@@ -192,8 +186,12 @@ $evac_centers = getEvacuationCenters();
 
                             <div id = "home_address_div">
                                 <div class="col-lg-6">
-                                    <div class="panel panel-default" id="accordion">
-                                        <div class="panel-heading"><b>Home Address</b></div>
+                                    <div class="panel panel-info" id="accordion">
+
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                            <div class="panel-heading"><h6><b>Home Address</b></h6></div>
+                                        </a>
+
                                         <div class="panel-body panel-collapse collapse in" id="collapseTwo"> 
 
                                             <div class="form-group col-md-6">
@@ -241,8 +239,12 @@ $evac_centers = getEvacuationCenters();
 
                             <div id = "relocation_div">
                                 <div class="col-lg-6">
-                                    <div class="panel panel-default" id="accordion">
-                                        <div class="panel-heading"><b>Relocation Address</b></div>
+                                    <div class="panel panel-info" id="accordion">
+
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                            <div class="panel-heading"><h6><b>Relocation Address</b></h6></div>
+                                        </a>
+
                                         <div class="panel-body panel-collapse collapse in" id="collapseThree">
 
                                             <div class="form-group col-md-6">
@@ -319,18 +321,11 @@ $evac_centers = getEvacuationCenters();
                 </div>
             </div>
 
-            </section>
-            <!-- /.content -->
-          </div>
-
         </div>
-        <!-- /#wrapper -->
-
 
         <?php includeCommonJS(); ?>
 
     </body>
-    
     
     <script type='text/javascript'>
         $(document).ready(function(){

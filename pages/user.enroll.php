@@ -16,26 +16,18 @@ $agencies = getAgencies();
 
     </head>
 
-    <body class="hold-transition skin-blue sidebar-mini fixed">
+    <body>
 
-        <div class="wrapper">
+        <div id="wrapper">
             
-           <?php includeNav(); ?>
-
-           <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-
-            <!-- Main content -->
-            <section class="content container-fluid">
-
-              <div id="page-wrapper">
+            <?php includeNav(); ?>
+            
+            <div id="page-wrapper">
                 
                 <div class="row">
-                    <section class="content-header">
-                      <h1>
-                        Account Management
-                      </h1>
-                    </section>
+                    <div class="header">
+                        <h3 class="title">&nbsp;Account Management</h3>
+                    </div>
                 </div>
 
                 <div class="row">
@@ -139,13 +131,8 @@ $agencies = getAgencies();
                 
             </div>
 
-            </section>
-            <!-- /.content -->
-          </div>
-
         </div>
         <!-- /#wrapper -->
-
 
         <?php includeCommonJS(); ?>
 

@@ -11,9 +11,8 @@ body {
 }
 #page-wrapper {
   padding: 0 15px;
-  min-height: 92vh;
+  min-height: 568px;
   background-color: white;
-  border-bottom:1px solid #ccc;
 }
 @media (min-width: 768px) {
   #page-wrapper {
