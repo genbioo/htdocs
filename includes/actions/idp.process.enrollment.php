@@ -1,4 +1,5 @@
 <?php
+die(print_r($_POST));
 include("../../initialize.php");
 includeCore();
 

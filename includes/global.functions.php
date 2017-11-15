@@ -122,6 +122,27 @@ function getBarangays()
     return $barangays;
 }
 
+function getFullAddress($barangayID='', $idpID='')
+{
+    $db_handle = new DBController();
+    $result = [];
+    if(isset($idpID) && ($idpID != '' || $idpID != 0))
+    {
+        $db_handle->prepareStatement("SELECT CONCAT((CASE WHEN idp.SpecificAddress = '' THEN '' ELSE CONCAT(idp.SpecificAddress, ', ') END), barangay.BarangayName, ', ', city_mun.City_Mun_Name, ', ', province.ProvinceName) AS Address FROM barangay LEFT JOIN idp ON barangay.BarangayID = idp.Origin_Barangay LEFT JOIN city_mun ON barangay.City_CityID = city_mun.City_Mun_ID LEFT JOIN province ON city_mun.PROVINCE_ProvinceID = province.ProvinceID WHERE barangay.BarangayID = :barangay AND idp.IDP_ID = :idpID");
+        $db_handle->bindVar(':barangay', $barangayID, PDO::PARAM_INT,0);
+        $db_handle->bindVar(':idpID', $idpID, PDO::PARAM_INT,0);
+        
+        $result = $db_handle->runFetch();
+    } else {
+        $db_handle->prepareStatement("SELECT CONCAT(barangay.BarangayName, ', ', city_mun.City_Mun_Name, ', ', province.ProvinceName) AS Address FROM barangay LEFT JOIN city_mun ON barangay.City_CityID = city_mun.City_Mun_ID LEFT JOIN province ON city_mun.PROVINCE_ProvinceID = province.ProvinceID WHERE barangay.BarangayID = :barangay");
+        $db_handle->bindVar(':barangay', $barangayID, PDO::PARAM_INT,0);
+        
+        $result = $db_handle->runFetch();
+    }
+    
+    return $result;
+}
+
 function getEvacuationCenters()
 {
     $db_handle = new DBController();
@@ -131,6 +152,17 @@ function getEvacuationCenters()
     return $evac_centers;
 }
 
+function getEvacDetails($evacID = '')
+{
+    $db_handle = new DBController();
+    $db_handle->prepareStatement("SELECT evacuation_centers.EvacuationCentersID, CONCAT(evacuation_centers.EvacName, ': ' ,barangay.BarangayName, ', ', city_mun.City_Mun_Name, ', ', province.ProvinceName) AS EvacAndAddress FROM evacuation_centers LEFT JOIN barangay ON evacuation_centers.EvacAddress = barangay.BarangayID LEFT JOIN city_mun ON city_mun.City_Mun_ID = barangay.City_CityID LEFT JOIN province ON province.ProvinceID = city_mun.PROVINCE_ProvinceID WHERE evacuation_centers.EvacuationCentersID = :evacID");
+    $db_handle->bindVar(':evacID', $evacID, PDO::PARAM_INT,0);
+    
+    $result = $db_handle->runFetch();
+    
+    return $result;
+}
+
 function getAgencies()
 {
     $db_handle = new DBController();
@@ -138,6 +170,16 @@ function getAgencies()
     $agencies = $db_handle->runFetch();
 
     return $agencies;
+}
+
+function getFormID($questionID)
+{
+    $db_handle = new DBController();
+    $db_handle->prepareStatement("SELECT FORM_FormID FROM `questions` WHERE QuestionsID = :qid");
+    $db_handle->bindVar(":qid", $questionID, PDO::PARAM_INT,0);
+    $formID = $db_handle->runFetch();
+    
+    return($formID[0]['FORM_FormID']);
 }
 
 function getAllAssessmentTools() {
@@ -261,6 +303,96 @@ function getIntakeCount($idpID = '')
     return $intakeCount;
 }
 
+function getAnswerInfo($faID='', $type='')
+{
+    $db_handle = new DBController();
+    if($type == 'intake')
+    {
+        $db_handle->prepareStatement("SELECT INTAKE_ANSWERS_ID, CONCAT(idp.Lname,', ',idp.Fname,' ',idp.Mname) as IDPName, CONCAT(user.Lname,', ', user.Fname, ' ', user.Mname) as UserResponsible, intake_answers.Date_taken FROM intake_answers JOIN idp on IDP_IDP_ID = idp.IDP_ID JOIN user on intake_answers.USER_UserID = user.UserID JOIN intake on intake.IntakeID = intake_answers.INTAKE_IntakeID WHERE intake_answers.INTAKE_ANSWERS_ID = :faID");
+    } else if($type == 'tool')
+    {
+        $db_handle->prepareStatement("SELECT FORM_ANSWERS_ID, form.FormType, form.Instructions, CONCAT(idp.Lname,', ',idp.Fname,' ',idp.Mname) as IDPName, CONCAT(user.Lname,', ', user.Fname, ' ', user.Mname) as UserResponsible, form_answers.UnansweredItems, form_answers.DateTaken FROM form_answers JOIN idp on IDP_IDP_ID = idp.IDP_ID JOIN user on form_answers.USER_UserID = user.UserID JOIN form on form.FormID = form_answers.FORM_FormID WHERE form_answers.FORM_ANSWERS_ID = :faID");
+    }
+    $db_handle->bindVar(':faID', $faID, PDO::PARAM_INT,0);
+    
+    $answerInfo = $db_handle->runFetch();
+    
+    return $answerInfo;
+}
+
+function getAnswers($faID='', $type='')
+{
+    $db_handle = new DBController();
+    if($type == 'intake')
+    {
+        $db_handle->prepareStatement("SELECT
+            intake_answers.INTAKE_ANSWERS_ID,
+            questions.QuestionsID,
+            questions.Question,
+            html_form.HTML_FORM_TYPE AS FormType,
+            html_form.HTML_FORM_INPUT_QUANTITY AS AnswerRange,
+            AnswersTable.AnswerID,
+            AnswersTable.Answer
+        FROM intake_answers
+        LEFT JOIN questions ON intake_answers.INTAKE_IntakeID = questions.INTAKE_IntakeID
+        LEFT JOIN
+            (SELECT
+                answers_quanti.INTAKE_ANSWERS_INTAKE_ANSWERS_ID,
+                answers_quanti.ANSWERS_QUANTI_ID AS AnswerID,
+                answers_quanti.QUESTIONS_QuestionsID,
+                answers_quanti.Answer
+            FROM answers_quanti
+            UNION SELECT
+                answers_quali.INTAKE_ANSWERS_INTAKE_ANSWERS_ID,
+                answers_quali.ANSWERS_QUALI_ID,
+                answers_quali.QUESTIONS_QuestionsID,
+                answers_quali.Answer FROM answers_quali
+            ) AnswersTable
+            ON
+                questions.QuestionsID = AnswersTable.QUESTIONS_QuestionsID
+            AND
+                intake_answers.INTAKE_ANSWERS_ID = AnswersTable.INTAKE_ANSWERS_INTAKE_ANSWERS_ID
+        LEFT JOIN html_form ON questions.HTML_FORM_HTML_FORM_ID = html_form.HTML_FORM_ID
+        WHERE intake_answers.INTAKE_ANSWERS_ID = :faID");   
+    } else if($type == 'tool')
+    {
+        $db_handle->prepareStatement("SELECT
+            form_answers.FORM_ANSWERS_ID,
+            questions.QuestionsID,
+            questions.Question,
+            html_form.HTML_FORM_TYPE AS FormType,
+            html_form.HTML_FORM_INPUT_QUANTITY AS AnswerRange,
+            AnswersTable.AnswerID,
+            AnswersTable.Answer
+        FROM form_answers
+        LEFT JOIN questions ON form_answers.FORM_FormID = questions.FORM_FormID
+        LEFT JOIN
+            (SELECT
+                answers_quanti.FORM_ANWERS_FORM_ANSWERS_ID,
+                answers_quanti.ANSWERS_QUANTI_ID AS AnswerID,
+                answers_quanti.QUESTIONS_QuestionsID,
+                answers_quanti.Answer
+            FROM answers_quanti
+            UNION SELECT
+                answers_quali.FORM_ANSWERS_FORM_ANSWERS_ID,
+                answers_quali.ANSWERS_QUALI_ID,
+                answers_quali.QUESTIONS_QuestionsID,
+                answers_quali.Answer FROM answers_quali
+            ) AnswersTable
+            ON
+                questions.QuestionsID = AnswersTable.QUESTIONS_QuestionsID
+            AND
+                form_answers.FORM_ANSWERS_ID = AnswersTable.FORM_ANWERS_FORM_ANSWERS_ID
+        LEFT JOIN html_form ON questions.HTML_FORM_HTML_FORM_ID = html_form.HTML_FORM_ID
+        WHERE form_answers.FORM_ANSWERS_ID = :faID");
+    }
+    $db_handle->bindVar(':faID', $faID, PDO::PARAM_INT,0);
+    
+    $answers = $db_handle->runFetch();
+    
+    return $answers;
+}
+
 function getIntakeID($idpID = '', $ag = '')
 {
     $formID = 0;
@@ -335,6 +467,38 @@ function getList($data, $listType = 'IDP', $listTarget = '')
         else
         {
             $query .= 'GROUP BY i.IDP_ID, IDPName ORDER BY 1 ASC ';
+        }
+    } else if($listType === 'Users')
+    {
+        $query .= "SELECT account.AccountID,
+                          CONCAT(user.Lname,', ', user.Fname, ' ', user.Mname) as User,
+                          user.PhoneNum,
+                          agency.AgencyName AS Agency,
+                          user.DateAdded
+                   FROM account
+                   JOIN user ON account.USER_UserID = user.UserID
+                   JOIN agency ON user.AGENCY_AgencyID = agency.AgencyID ";
+
+        if($keyword != '')
+        {
+            $query .= " WHERE user.Lname LIKE :keyword OR user.Fname LIKE :keyword OR user.Mname LIKE :keyword OR agency.AgencyName LIKE :keyword OR user.PhoneNum LIKE :keyword ";
+        }
+
+        if($order != '')
+        {
+            if($order['0']['dir'] == 'asc')
+            {
+                $query .= 'ORDER BY :orderColumn ASC ';
+            }
+            else
+            {
+                $query .= 'ORDER BY :orderColumn DESC ';
+            }
+
+        }
+        else
+        {
+            $query .= 'ORDER BY 1 ASC ';
         }
     }
     else if($listType === 'Evac')
@@ -423,7 +587,7 @@ function getList($data, $listType = 'IDP', $listTarget = '')
         }
         else
         {
-            $query .= 'ORDER BY DateTaken ASC, FormType ASC ';
+            $query .= 'ORDER BY DateTaken DESC, FormType ASC ';
         }
     }
     else if($listType === 'Intake')
@@ -465,7 +629,7 @@ function getList($data, $listType = 'IDP', $listTarget = '')
                     FROM intake_answers
                     JOIN user
                         ON intake_answers.USER_UserID = user.UserID
-                    WHERE INTAKE_ANSWERS_ID = :intakeID ";
+                    WHERE INTAKE_ANSWERS_ID = :intakeID ORDER BY DateTaken DESC";
                 } else {
                     $query = "SELECT Date_taken AS DateTaken,
 
@@ -483,7 +647,7 @@ function getList($data, $listType = 'IDP', $listTarget = '')
                  FROM intake_answers
                  JOIN user
                     ON intake_answers.USER_UserID = user.UserID
-                 WHERE INTAKE_ANSWERS_ID = :intakeID ";
+                 WHERE INTAKE_ANSWERS_ID = :intakeID ORDER BY DateTaken DESC";
                 }
                 
                 $db_handle->prepareStatement($query);
@@ -617,6 +781,16 @@ function getList($data, $listType = 'IDP', $listTarget = '')
                                 Apply Assessment Tool
                          </a>';
                 }
+            } else if($listType === 'Users')
+            {
+                $recordsFiltered = get_total_all_records('Users', 0);
+
+                $subArray["DT_RowId"] = $row["AccountID"];
+                $subArray[] = $row["User"];
+                $subArray[] = $row["PhoneNum"];
+                $subArray[] = $row["Agency"];
+                $phpdate = strtotime($row["DateAdded"]);
+                $subArray[] = date('M d, Y <\b\r> h:i a', $phpdate);
             }
             else if($listType === 'Tool')
             {
@@ -697,6 +871,11 @@ function get_total_all_records($type, $target = '')
     if($type === 'IDP')
     {
         $db_handle->prepareStatement("SELECT COUNT(*) AS total FROM `idp`");
+        $result = $db_handle->runFetch();
+    }
+    else if($type === 'Users')
+    {
+        $db_handle->prepareStatement("SELECT COUNT(*) AS total FROM `user`");
         $result = $db_handle->runFetch();
     }
     else if($type === 'Tool')

@@ -17,6 +17,11 @@ includeCore();
             <?php includeNav(); ?>
             <div id="page-wrapper">
                 <div class="row">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item active">Dashboard</li>
+                    </ol>
+                </div>
+                <div class="row">
                     <div class="header">
                         <h3 class="title">&nbsp;Dashboard</h3>
                     </div>

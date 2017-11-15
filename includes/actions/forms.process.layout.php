@@ -3,7 +3,7 @@ include("../../initialize.php");
 includeCore();
 
 $db_handle = new DBController();
-$previous = $_SERVER['HTTP_REFERER'];
+$formID = $_POST['formID'];
 $post_values = $_POST;
 $db_handle->prepareStatement("SELECT * FROM `html_form`");
 $html_forms = $db_handle->runFetch();
@@ -50,20 +50,22 @@ for($j = 0; $j < $q_ids_len; $j++) {
 for($k = 0; $k < $q_ids_len; $k++) {
     $query .= "UPDATE `questions` SET `HTML_FORM_HTML_FORM_ID` = :html".$outputArray[$k][0]." WHERE `questions`.`QuestionsID` = :qID".$q_ids[$k].";";
 }
-#die($query);
 $db_handle->prepareStatement($query);
 for($k = 0; $k < $q_ids_len; $k++) {
     $db_handle->bindVar(':html'.$outputArray[$k][0], $outputArray[$k][0], PDO::PARAM_INT, 0);
     $db_handle->bindVar(':qID'.$q_ids[$k], $q_ids[$k], PDO::PARAM_INT, 0);
-    #echo(':html'.$outputArray[$k][0].': '.$outputArray[$k][0].'<br>');
-    #echo(':qID'.$q_ids[$k].': '.$q_ids[$k].'<br>');
 }
-#die($query);
 $db_handle->runUpdate();
 
 if($db_handle->getUpdateStatus()) {
-    echo "<script type='text/javascript'>alert('Layout saved!');
-    location='".$previous."';
-    </script>";
+    $db_handle->prepareStatement("INSERT INTO `edit_history`(`EditHistoryID`, `USER_UserID`, `LastEdit`, `FORM_FormID`, `QUESTIONS_QuestionsID`, `INTAKE_IntakeID`, `Remark`) VALUES (NULL, :usr, now(), :formID, NULL, NULL, :edit)");
+    $db_handle->bindVar(':usr', $_SESSION['UserID'], PDO::PARAM_INT, 0);
+    $db_handle->bindVar(':formID', $formID, PDO::PARAM_INT, 0);
+    $db_handle->bindVar(':edit', 'edited this form\'s layout.', PDO::PARAM_STR, 0);
+    $db_handle->runUpdate();
+    
+    header("location: /pages/forms.edit.tool.php?form_id=".$formID."&status=layoutsuccess");
+} else {
+    header("location: /pages/forms.edit.tool.php?form_id=".$formID."&status=layouterror");
 }
 ?>

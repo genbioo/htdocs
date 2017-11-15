@@ -6,7 +6,7 @@ includeLayoutGenerator();
 
 $toolIDs = json_decode($_POST["toolID"]);
 $idpName = $_POST['idpName'];
-$_SESSION['idpID'] = $_POST['idpID'];
+$idpID = $_POST['idpID'];
 $form_info = getMultipleAssessmentTools($toolIDs);
 $questionsResult = getAssessmentQuestions('Tool',$toolIDs);
 ?>
@@ -26,7 +26,7 @@ $questionsResult = getAssessmentQuestions('Tool',$toolIDs);
             <div id="exam-wrapper">
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
-                        <form action="/includes/actions/assessment.process.answers.tool.php" method="post">
+                        <form action="/includes/actions/assessment.process.answers.tool.php?id=<?php echo($idpID); ?>" method="post">
                             <?php echo(displayQuestions($questionsResult, $form_info, $idpName)); ?>
                         <div class="col-md-12">
                             <button id="btn-submit-form" class="btn btn-primary btn-md" type="submit"><i class="fa fa-check"></i>&nbsp;Submit</button>

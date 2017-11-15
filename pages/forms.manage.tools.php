@@ -20,10 +20,15 @@ includeCore();
         <div id="wrapper">
             <?php includeNav(); ?>
             <div id="page-wrapper">
+                <div class="row">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active">Assessment Tools</li>
+                    </ol>
+                </div>
                 <!-- /.row -->
                 <div class="row">
                     <div class="header">
-                        <h3 class="title">&nbsp;Assessment Tools</h3>
+                        <h3 class="title">&nbsp;Assessment Tools&nbsp;<a href="/pages/forms.add.tool.php" class="btn btn-success btn-xs">Add Assessment tool</a></h3>
                     </div>
                     <div class="col-lg-12">
                         <div class="panel panel-default">

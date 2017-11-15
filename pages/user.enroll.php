@@ -12,7 +12,10 @@ $agencies = getAgencies();
 
     <head>
 
-        <?php includeHead("PSRMS - Account Management"); ?>
+        <?php
+        includeHead("PSRMS - Account Management");
+        includeDataTables();
+        ?>
 
     </head>
 
@@ -23,7 +26,11 @@ $agencies = getAgencies();
             <?php includeNav(); ?>
             
             <div id="page-wrapper">
-                
+                <div class="row">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active">Account Management</li>
+                    </ol>
+                </div>
                 <div class="row">
                     <div class="header">
                         <h3 class="title">&nbsp;Account Management</h3>
@@ -127,6 +134,23 @@ $agencies = getAgencies();
                         </form>
                     </div>
                     
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <table width="100%" class="table table-bordered table-hover" id="table-user-list">
+                                    <thead>
+                                        <tr>
+                                            <th>User</th>
+                                            <th>Phone No.</th>
+                                            <th>Agency</th>
+                                            <th>Date Enrolled</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
                 
             </div>
@@ -148,6 +172,18 @@ $agencies = getAgencies();
                 }
             });
         });
+        $(document).ready(function() {
+            var dataTable = $('#table-user-list').DataTable( {
+                "responsive": true,
+                "processing": true,
+                "serverSide": true,
+                "order":[],
+                "ajax":{
+                    url :"<?php echo(ROOT); ?>includes/actions/user.generate.list.php",
+                    method: "POST",
+                }
+            } );
+        } );
     </script>
     
 </html>

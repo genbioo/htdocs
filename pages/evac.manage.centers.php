@@ -20,6 +20,11 @@ includeCore();
         <div id="wrapper">
             <?php includeNav(); ?>
             <div id="page-wrapper">
+                <div class="row">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active">Evacuation Centers</li>
+                    </ol>
+                </div>
                 <!-- /.row -->
                 <div class="row">
                     <div class="header">

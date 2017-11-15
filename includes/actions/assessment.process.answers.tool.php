@@ -1,7 +1,9 @@
 <?php
+die(print_r($_POST));
 include("../../initialize.php");
 includeCore();
 
+$idpID = $_GET['id'];
 $db_handle = new DBController();
 $post = $_POST;
 $query = "";
@@ -30,7 +32,7 @@ foreach($post as $key => $result) {
             $db_handle->prepareStatement("INSERT INTO `form_answers` (`FORM_ANSWERS_ID`, `USER_UserID`, `FORM_FormID`, `DateTaken`, `IDP_IDP_ID`, `UnansweredItems`) VALUES (NULL, :userID, :formID, CURRENT_TIMESTAMP, :idpID, NULL);");
             $db_handle->bindVar(':userID', $_SESSION['UserID'], PDO::PARAM_INT,0);
             $db_handle->bindVar(':formID', $keys2[0], PDO::PARAM_INT,0);
-            $db_handle->bindVar(':idpID', $_SESSION['idpID'], PDO::PARAM_INT,0);
+            $db_handle->bindVar(':idpID', $idpID, PDO::PARAM_INT,0);
             $db_handle->runUpdate();
             //store the auto-incremented id for use in update. Unanswered questions will be updated after this foreach
             $tempID = $db_handle->getLastInsertID();
@@ -99,9 +101,14 @@ foreach($parameters as $param) {
     $db_handle->bindVar(':faid'.$paramNum, $param['faid'.$paramNum], PDO::PARAM_INT,0);
 }
 
-$db_handle->runUpdate($query);
-if($db_handle->getUpdateStatus()) {
-    header("location: /pages/idp.assessment.history.php?id=".$_SESSION['idpID']."&status=toolsuccess");
+if($query != '')
+{
+    $db_handle->runUpdate();
 }
-unset($_SESSION['idpID']);
+if($db_handle->getUpdateStatus()) {
+    header("location: /pages/idp.assessment.history.php?id=".$idpID."&status=toolsuccess");
+} else
+{
+    header("location: /pages/idp.assessment.history.php?id=".$idpID."&status=toolempty");
+}
 ?>

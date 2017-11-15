@@ -21,10 +21,15 @@ $_SESSION['disaster_id'] = 1;
     <body>
 
         <div id="wrapper">
-            
-           <?php includeNav(); ?>
+
+            <?php includeNav(); ?>
 
             <div id="page-wrapper">
+                <div class="row">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active">IDPs</li>
+                    </ol>
+                </div>
                 <!-- /.row -->
                 <div class="row">
                     <div class="header">
@@ -32,7 +37,7 @@ $_SESSION['disaster_id'] = 1;
                     </div>
                     <div class="col-lg-12">
                         <div class="panel panel-default">
-                            
+
                             <div class="panel-body">
                                 <table width="100%" class="table table-bordered table-hover" id="table-idp-list">
                                     <thead>
